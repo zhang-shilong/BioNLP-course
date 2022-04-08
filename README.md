@@ -4,9 +4,13 @@
 
 ## 环境安装
 
+我们所用的环境是 Python 3.7.13。
+
 下载我们所用的 Python 库，包括 Biopython 和 requests：
 
 ```shell
+conda create -n bionlp python=3.7.13
+conda activate bionlp
 pip install -r requirements.txt
 ```
 

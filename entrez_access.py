@@ -10,5 +10,5 @@ Entrez.email = "zhang_shilong@outlook.com"
 search_results = Entrez.read(
     Entrez.esearch(db="pubmed", term=term, retmax=300000, datatype="pdat", mindate="2021/07/01", maxdate="2022/03/01")
 )
-with open(term + "_pmid.txt", "w") as out:
+with open("data/" + term + "_pmid.txt", "w") as out:
     out.write("\n".join(search_results["IdList"]))

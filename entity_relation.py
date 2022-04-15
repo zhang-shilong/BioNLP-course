@@ -3,64 +3,58 @@
 @author: zhang shilong
 @date: 2022/04/05
 """
-input_path = "litcovid.pubtator.pmid.txt"
+import re
+
+input_path = "data/test.txt"
 relation = {}
 
 with open(input_path, "r", encoding="utf8") as file:
+    text = file.read()
+    articles = text.split("\n\n")
 
-    for line in file.readlines():
-        line = line.strip()
-        if not line:
-            continue
-        if "|t|" in line:
-            title = line.split("|")[2]
-            continue
-        if "|a|" in line:
-            para = line.split("|")[2]
-            sentences = para.split(". ")
-            sentences.insert(0, title + "\n")
+for article in articles:
+    lines = article.split("\n")
+    title = lines[0].split("|")[2]
+    abstract = lines[1].split("|")[2]
+    para = title + "\n" + abstract
+    sep = [0]
+    for pos in re.finditer("\. |\n", para):
+        sep.append(int(pos.start()))
 
-            cur_index = 0
-            cur_start = 0
-            cur_end = len(sentences[0]) - 1
+    annos = dict()
+    for line in lines[2:]:
+        if line:
+            contents = line.strip("\n").split("\t")
+            annos[int(contents[1])] = {"value": contents[3], "type": contents[4], "id": contents[5]}
+    annos = list(annos.items())
+
+    tmp = dict()
+    cur_pos = 1
+    cur_anno = 0
+    while cur_pos < len(sep) and cur_anno < len(annos):
+        if sep[cur_pos] > annos[cur_anno][0]:
+            if annos[cur_anno][1]["value"] not in tmp.keys():
+                tmp[annos[cur_anno][1]["value"]] = {"type": annos[cur_anno][1]["type"], "id": annos[cur_anno][1]["id"]}
+            cur_anno += 1
+
+        if cur_anno == len(annos) or sep[cur_pos] <= annos[cur_anno][0]:
+            if len(tmp) > 1:
+                tmp_list = list(tmp.items())
+                for i, (tmp_key1, tmp_value1) in enumerate(tmp_list):
+                    if len(tmp_list) == i + 1:
+                        break
+                    for j, (tmp_key2, tmp_value2) in enumerate(tmp_list[i + 1:]):
+                        flag = tmp_value1["type"] < tmp_value2["type"]
+                        relation_key = tmp_key1 + "~" + tmp_key2 if flag else tmp_key2 + "~" + tmp_key1
+                        relation_type = tmp_value1["type"] + "~" + tmp_value2["type"] \
+                            if flag else tmp_value2["type"] + "~" + tmp_value1["type"]
+                        if relation_key not in relation.keys():
+                            relation[relation_key] = {"count": 1, "type": relation_type}
+                        else:
+                            relation[relation_key]["count"] += 1
+            cur_pos += 1
             tmp = dict()
-            continue
-
-        contents = line.split("\t")
-        key = contents[3].lower()
-        if cur_start <= int(contents[1]) and cur_end >= int(contents[2]):
-            tmp[key] = {"type": contents[4], "id": contents[5]}
-
-        if cur_end < int(contents[1]) and len(tmp) > 1:
-            tmp_list = list(tmp.items())
-            for i, (tmp_key1, tmp_value1) in enumerate(tmp_list):
-                if len(tmp_list) == i + 1:
-                    break
-                for j, (tmp_key2, tmp_value2) in enumerate(tmp_list[i+1:]):
-                    if tmp_value1["type"] > tmp_value2["type"]:
-                        relation_key = tmp_key1 + "~" + tmp_key2
-                        relation_type = tmp_value1["type"] + "~" + tmp_value2["type"]
-                    elif tmp_value1["type"] < tmp_value2["type"]:
-                        relation_key = tmp_key2 + "~" + tmp_key1
-                        relation_type = tmp_value2["type"] + "~" + tmp_value1["type"]
-                    if relation_key not in relation.keys():
-                        relation[relation_key] = {"count": 1, "type": relation_type}
-                    else:
-                        relation[relation_key]["count"] += 1
-
-            tmp = dict()
-            while True:
-                cur_start += len(sentences[cur_index]) + 1
-                cur_index += 1
-                if cur_index == len(sentences):
-                    break
-                cur_end += len(sentences[cur_index]) + 1
-                if cur_start <= int(contents[1]):
-                    break
 
 sorted_relation = sorted(relation.items(), key=lambda x: x[1]["count"])
-for key, value in sorted_relation:
-    if value["type"] == "Mutation~Gene" and value["count"] >= 0:
-        key1, key2 = key.split("~")
-        print(key1 + "\t" + key2 + "\t" + str(value["count"]))
-# print(sorted_relation)
+for k, v in sorted_relation:
+    print(k, v)

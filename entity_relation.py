@@ -5,7 +5,9 @@
 """
 import re
 
-input_path = "data/test.txt"
+input_path = "data/Covid-19_pubtator.txt"
+output_path = "data/sentence.txt"
+out = open(output_path, "w")
 relation = {}
 
 with open(input_path, "r", encoding="utf8") as file:
@@ -14,12 +16,15 @@ with open(input_path, "r", encoding="utf8") as file:
 
 for article in articles:
     lines = article.split("\n")
-    title = lines[0].split("|")[2]
+    title = lines[0]
+    if not title:
+        continue
+    title = title.split("|")[2]
     abstract = lines[1].split("|")[2]
-    para = title + "\n" + abstract
+    para = title + " " + abstract
     sep = [0]
-    for pos in re.finditer("\. |\n", para):
-        sep.append(int(pos.start()))
+    for pos in re.finditer("\. ", para):
+        sep.append(int(pos.start())+2)
 
     annos = dict()
     for line in lines[2:]:
@@ -32,7 +37,7 @@ for article in articles:
     cur_pos = 1
     cur_anno = 0
     while cur_pos < len(sep) and cur_anno < len(annos):
-        if sep[cur_pos] > annos[cur_anno][0]:
+        if sep[cur_pos] >= annos[cur_anno][0]:
             if annos[cur_anno][1]["value"] not in tmp.keys():
                 tmp[annos[cur_anno][1]["value"]] = {"type": annos[cur_anno][1]["type"], "id": annos[cur_anno][1]["id"]}
             cur_anno += 1
@@ -52,9 +57,13 @@ for article in articles:
                             relation[relation_key] = {"count": 1, "type": relation_type}
                         else:
                             relation[relation_key]["count"] += 1
+                if relation_type == "Chemical~Gene":
+                    out.write(para[sep[cur_pos-1]:sep[cur_pos]].encode('gbk', 'ignore').decode('gbk') + "\n")
+                    out.write("\t".join(tmp.keys()).encode('gbk', 'ignore').decode('gbk') + "\n")
             cur_pos += 1
             tmp = dict()
 
-sorted_relation = sorted(relation.items(), key=lambda x: x[1]["count"])
-for k, v in sorted_relation:
-    print(k, v)
+# sorted_relation = sorted(relation.items(), key=lambda x: x[1]["count"])
+# for k, v in sorted_relation:
+#     if v["type"] == "Chemical~Gene":
+#         print("\t".join(k.split("~")) + "\t" + v["type"])

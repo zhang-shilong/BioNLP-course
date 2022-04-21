@@ -58,8 +58,11 @@ for article in articles:
                         else:
                             relation[relation_key]["count"] += 1
                 if relation_type == "Chemical~Gene":
-                    out.write(para[sep[cur_pos-1]:sep[cur_pos]].encode('gbk', 'ignore').decode('gbk') + "\n")
-                    out.write("\t".join(tmp.keys()).encode('gbk', 'ignore').decode('gbk') + "\n")
+                    out.write("s|" + para[sep[cur_pos-1]:sep[cur_pos]].encode('gbk', 'ignore').decode('gbk') + "\n")
+                    line = []
+                    for k, v in tmp.items():
+                        line.append(v["type"] + ":" + k)
+                    out.write("e|" + "\t".join(line).encode('gbk', 'ignore').decode('gbk') + "\n")
             cur_pos += 1
             tmp = dict()
 

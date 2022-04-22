@@ -10,6 +10,9 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import re
 
+out_path = "data/triple.txt"
+out = open(out_path, "w")
+
 def split_W(entity):
     # split by non-alphabet and non-number characters
     tmp = re.split("\W", entity.lower())
@@ -28,7 +31,7 @@ def add_modifers(graph, path, addition=list()):
     path.insert(0, "")
     path.append("")
     path_with_modifers = path.copy()
-    j = 0
+    j = 1
     for node in path[2:-2]:
         j += 1
         if not node:
@@ -60,10 +63,25 @@ def find_common_neighbor(graph, entity_dict, e, expect):
 
 def back_to_raw_name(raw_dict, path):
     # replace entity name in path
+    if len(path) <= 4:
+        return
     path = " ".join(path[1:-1])
     for pv, v in raw_dict.items():
-        path = path.replace(pv ,v)
-    print(path)
+        if pv != v:
+            path = path.replace(pv ,v)
+    head_flag = tail_flag = False
+    head = tail = None
+    for raw in raw_dict.values():
+        if not head_flag and path.startswith(raw + " "):
+            head = raw
+            head_flag = True
+            path = path[len(raw) + 1:]
+        elif not tail_flag and path.endswith(" " + raw):
+            tail = raw
+            tail_flag = True
+            path = path[:-(len(raw) + 1)]
+    if head and tail:
+        out.write(head + "\t" + path + "\t"  + tail + "\n")
 
 def sdp(graph, entity_dict, entity_list, raw_dict):
     # algorithm of shortest dependency path, including nx.shortest_path() and add_modifers(), output processed SDP
@@ -113,3 +131,5 @@ if __name__ == "__main__":
                 entities_list = list(entities_dict.keys())
 
                 sdp(graph, entities_dict, entities_list, raw_entities)
+
+    out.close()

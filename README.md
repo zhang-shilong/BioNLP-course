@@ -16,39 +16,16 @@ pip install -r requirements.txt
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz
 ```
 
-## 文献 PMID 获取
+## 程序介绍
 
-以“Covid-19”为检索条目，要求出版时间为 2021 年 7 月 1 日至 2022 年 3 月 1 日，从 Entrez 获取 PMID，输出到 `Covid-19_pmid.txt`。
+本项目包含以下代码文件：
 
-```shell
-python entrez_access.py
-```
+- `entrez_access.py`：访问 Entrez API，获取文献 PMID；
+- `pubtator_access.py`：访问 PubTator API，获取文献的标题和摘要标注；
+- `entity_counter.py`：实体计数；
+- `entity_relation.py`：共句关系计数；
+- `relation_extraction.py`：三元组抽取；
+- `DGL-KE_calling.py`：对 DGL-KE 的调用，实现了交叉验证和预测。
 
-## PubTator 实体标注
-
-调用 PubTator API，从 PubTator 检索 PMID，获取标题、摘要和实体标注信息，输出到 `Covid-19_pubtator`。
-
-```shell
-python pubtator_access.py
-```
-
-## 实体频次统计
-
-统计实体频次。
-
-```shell
-python entity_count.py
-```
-
-## 共句分析
-
-我们对 PubTator 标注的实体进行共句分析，期望找到基因和 Covid-19 突变类型的关系，并将结果输出为 Cytoscape 可以读取的信息，进行可视化。
-
-```shell
-python entity_relation.py
-```
-
-## 小结
-
-以上是长文（修订稿）中涉及的代码实现。
+以上是长文（终稿）中涉及的代码实现。
 

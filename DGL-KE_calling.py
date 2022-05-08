@@ -1,10 +1,15 @@
+"""
+DGL-KE交叉验证与预测
+@author: zhang shilong
+@date: 2022/05/05
+"""
 import numpy as np
 import spacy
 import scispacy
 import os
 
 
-class CrossValidator:
+class DGLKEModel:
 
     def __init__(self):
         self.triple_dict = dict()
@@ -115,8 +120,8 @@ class CrossValidator:
 if __name__ == "__main__":
     input_path = "data/qc_passed_triples.txt"
 
-    cv = CrossValidator()
-    # cv.read_triples(input_path, quality_control=False)
-    # cv.k_fold_cross_validation()
+    model = DGLKEModel()
+    model.read_triples(input_path, quality_control=False)
+    model.k_fold_cross_validation()
 
-    cv.predict("model/TransE_l2_covid-19_1", "h_*_t", head_list="data/head.list", tail_list="data/tail.list")
+    model.predict("model/TransE_l2_covid-19_0", "h_*_t", head_list="data/head.list", tail_list="data/tail.list")

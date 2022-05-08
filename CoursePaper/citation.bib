@@ -27,13 +27,6 @@ URL = {https://doi.org/10.1021/acsomega.1c07186},
 eprint = {https://doi.org/10.1021/acsomega.1c07186}
 }
 
-@inproceedings{pyg,
-  title={Fast Graph Representation Learning with {PyTorch Geometric}},
-  author={Fey, Matthias and Lenssen, Jan E.},
-  booktitle={ICLR Workshop on Representation Learning on Graphs and Manifolds},
-  year={2019},
-}
-
 @article{link_prediction,
 author = {Rossi, Andrea and Barbosa, Denilson and Firmani, Donatella and Matinata, Antonio and Merialdo, Paolo},
 title = {Knowledge Graph Embedding for Link Prediction: A Comparative Analysis},
@@ -76,4 +69,64 @@ url = {https://www.sciencedirect.com/science/article/pii/S0741832920302913},
 author = {Kristina L. Bailey and Derrick R. Samuelson and Todd A. Wyatt},
 keywords = {alcohol, coronavirus, COVID-19, injury, lung, SARS-CoV-2},
 abstract = {Alcohol misuse is long established as a contributor to the pathophysiology of the lung. The intersection of multi-organ responses to alcohol-mediated tissue injury likely contributes to the modulation of lung in response to injury. Indeed, the negative impact of alcohol on susceptibility to infection and on lung barrier function is now well documented. Thus, the alcohol lung represents a very likely comorbidity for the negative consequences of both COVID-19 susceptibility and severity. In this review, we present the known alcohol misuse ramifications on the lung in the context of the current coronavirus pandemic.}
+}
+
+@inproceedings{GATNE,
+author = {Cen, Yukuo and Zou, Xu and Zhang, Jianwei and Yang, Hongxia and Zhou, Jingren and Tang, Jie},
+title = {Representation Learning for Attributed Multiplex Heterogeneous Network},
+year = {2019},
+isbn = {9781450362016},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3292500.3330964},
+doi = {10.1145/3292500.3330964},
+abstract = {Network embedding (or graph embedding) has been widely used in many real-world applications. However, existing methods mainly focus on networks with single-typed nodes/edges and cannot scale well to handle large networks. Many real-world networks consist of billions of nodes and edges of multiple types, and each node is associated with different attributes. In this paper, we formalize the problem of embedding learning for the Attributed Multiplex Heterogeneous Network and propose a unified framework to address this problem. The framework supports both transductive and inductive learning. We also give the theoretical analysis of the proposed framework, showing its connection with previous works and proving its better expressiveness. We conduct systematical evaluations for the proposed framework on four different genres of challenging datasets: Amazon, YouTube, Twitter, and Alibaba. Experimental results demonstrate that with the learned embeddings from the proposed framework, we can achieve statistically significant improvements (e.g., 5.99-28.23% lift by F1 scores; p&lt;&lt;0.01, t-test) over previous state-of-the-art methods for link prediction. The framework has also been successfully deployed on the recommendation system of a worldwide leading e-commerce company, Alibaba Group. Results of the offline A/B tests on product recommendation further confirm the effectiveness and efficiency of the framework in practice.},
+booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+pages = {1358–1368},
+numpages = {11},
+keywords = {multiplex network, heterogeneous network, network embedding},
+location = {Anchorage, AK, USA},
+series = {KDD '19}
+}
+
+@inbook{DGL-KE,
+author = {Zheng, Da and Song, Xiang and Ma, Chao and Tan, Zeyuan and Ye, Zihao and Dong, Jin and Xiong, Hao and Zhang, Zheng and Karypis, George},
+title = {DGL-KE: Training Knowledge Graph Embeddings at Scale},
+year = {2020},
+isbn = {9781450380164},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3397271.3401172},
+abstract = {Knowledge graphs have emerged as a key abstraction for organizing information in diverse domains and their embeddings are increasingly used to harness their information in various information retrieval and machine learning tasks. However, the ever growing size of knowledge graphs requires computationally efficient algorithms capable of scaling to graphs with millions of nodes and billions of edges. This paper presents DGL-KE, an open-source package to efficiently compute knowledge graph embeddings. DGL-KE introduces various novel optimizations that accelerate training on knowledge graphs with millions of nodes and billions of edges using multi-processing, multi-GPU, and distributed parallelism. These optimizations are designed to increase data locality, reduce communication overhead, overlap computations with memory accesses, and achieve high operation efficiency. Experiments on knowledge graphs consisting of over 86M nodes and 338M edges show that DGL-KE can compute embeddings in 100 minutes on an EC2 instance with 8 GPUs and 30 minutes on an EC2 cluster with 4 machines with 48 cores/machine. These results represent a 2\texttimes{} ~ 5\texttimes{} speedup over the best competing approaches. DGL-KE is available on https://github.com/awslabs/dgl-ke.},
+booktitle = {Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval},
+pages = {739–748},
+numpages = {10}
+}
+
+@article{ritonavir1,
+author = {Irina F. Sevrioukova  and Thomas L. Poulos },
+title = {Structure and mechanism of the complex between cytochrome P4503A4 and ritonavir},
+journal = {Proceedings of the National Academy of Sciences},
+volume = {107},
+number = {43},
+pages = {18422-18427},
+year = {2010},
+doi = {10.1073/pnas.1010693107},
+URL = {https://www.pnas.org/doi/abs/10.1073/pnas.1010693107},
+eprint = {https://www.pnas.org/doi/pdf/10.1073/pnas.1010693107},
+abstract = {Ritonavir is a HIV protease inhibitor routinely prescribed to HIV patients that also potently inactivates cytochrome P4503A4 (CYP3A4), the major human drug-metabolizing enzyme. By inhibiting CYP3A4, ritonavir increases plasma concentrations of other anti-HIV drugs oxidized by CYP3A4 thereby improving clinical efficacy. Despite the importance and wide use of ritonavir in anti-HIV therapy, the precise mechanism of CYP3A4 inhibition remains unclear. The available data are inconsistent and suggest that ritonavir acts as a mechanism-based, competitive or mixed competitive-noncompetitive CYP3A4 inactivator. To resolve this controversy and gain functional and structural insights into the mechanism of CYP3A4 inhibition, we investigated the ritonavir binding reaction by kinetic and equilibrium analysis, elucidated how the drug affects redox properties of the hemoprotein, and determined the 2.0\&nbsp;Å X-ray structure of the CYP3A4-ritonavir complex. Our results show that ritonavir is a type II ligand that perfectly fits into the CYP3A4 active site cavity and irreversibly binds to the heme iron via the thiazole nitrogen, which decreases the redox potential of the protein and precludes its reduction with the redox partner, cytochrome P450 reductase.}}
+
+@article {ritonavir2,
+  Title = {Ritonavir greatly impairs CYP3A activity in HIV infection with chronic viral hepatitis},
+  Author = {Knox, Tamsin A and Oleson, Lauren and von Moltke, Lisa L and Kaufman, Rhonda C and Wanke, Christine A and Greenblatt, David J},
+  DOI = {10.1097/qai.0b013e31818c7efe},
+  Number = {4},
+  Volume = {49},
+  Month = {December},
+  Year = {2008},
+  Journal = {Journal of acquired immune deficiency syndromes (1999)},
+  ISSN = {1525-4135},
+  Pages = {358—368},
+  Abstract = {&lt;h4&gt;Purpose&lt;/h4&gt;Ritonavir is a powerful inhibitor of cytochrome P450 3A (CYP3A) that metabolizes many antiretrovirals. We examined the effect of ritonavir and of chronic viral hepatitis (CVH) status on CYP3A activity.&lt;h4&gt;Methods&lt;/h4&gt;Twenty-six HIV-positive men (13 with CVH, 16 on chronic ritonavir-based highly active antiretroviral therapy) received oral and intravenous midazolam, a probe for CYP3A phenotypic activity.&lt;h4&gt;Results&lt;/h4&gt;CYP3A activity was expressed as oral clearance of the midazolam probe. In HIV-positive subjects not on ritonavir, CYP3A activity (mean +/- SD) did not differ between subjects by CVH (no CVH, controls: 28.5 +/- 9.0 vs. CVH+: 23.2 +/- 6.2 mL/min/kg, not significant). In those on ritonavir (R), CYP3A activity was 7% of controls (R: 2.1 +/- 0.8 vs. no R 28.5 +/- 9.0 mL/min/kg, P &lt; 0.0004). CYP3A activity in subjects on ritonavir and with CVH was further reduced to 4% of controls (no CVH, R+ 2.1 +/- 0.8 vs. R+, CVH+ 1.0 +/- 0.4 mL/min/kg, P &lt; 0.006).&lt;h4&gt;Conclusions&lt;/h4&gt;Ritonavir markedly decreases CYP3A activity. In the presence of CVH, ritonavir-based therapy further reduces CYP3A activity by half. Coinfection with CVH impairs CYP3A activity in the presence of the CYP3A inhibitor ritonavir.},
+  URL = {https://doi.org/10.1097/qai.0b013e31818c7efe},
 }

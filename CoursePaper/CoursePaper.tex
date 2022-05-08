@@ -39,10 +39,6 @@
 %Use Chinese
 \usepackage[UTF8]{ctex}
 
-% command
-\renewcommand{\algorithmicrequire}{\textbf{Input:}}
-\renewcommand{\algorithmicensure}{\textbf{Output:}}
-
 \title{图表示学习\\在Covid-19文献挖掘和知识发现中的应用}
 
 \author{张世龙$^{1}$, 严晶$^{1}$，高飞宇$^{1}$}
@@ -62,7 +58,7 @@
 \maketitle
 
 \begin{abstract}
-新型冠状病毒肺炎（Covid-19）自从被发现以来，经历了地方性流行、流行、大流行的过程，并最终在全球范围内扩散蔓延。疫情爆发两年多以来，Covid-19已然成为最具影响力的话题之一，目前已有大量相关报道与文献。自然语言处理技术包括命名实体识别、关系识别、语法依存树的构建、词嵌入与图嵌入的研究，是本项目的核心算法。在本项目中，我们从PubTator获取文献实体标注信息开始，到知识图谱的生成，和图表示学习与信息挖掘，期望推测出化合物与Covid-19基因相关的结论。\par
+新型冠状病毒肺炎（Covid-19）自从被发现以来，经历了地方性流行、流行、大流行的过程，并最终在全球范围内扩散蔓延。疫情爆发两年多以来，Covid-19已然成为最具影响力的话题之一，目前已有大量相关报道与文献。自然语言处理技术包括命名实体识别、关系识别、语法依存树的构建、词嵌入与图嵌入的研究等，为大规模文本处理和知识发现提供了技术支持。在本项目中，我们从PubTator获取文献实体标注信息开始，到知识图谱的生成，和图表示学习与信息挖掘，期望推测出化合物与Covid-19相关基因的结论。\par
 {\bf Codes availability:} \url{https://github.com/zhang-shilong/BioNLP-course}。\par
 {\bf 关键词: NLP，Covid-19，图表示学习，知识发现}
 \end{abstract}
@@ -71,9 +67,9 @@
 
 \section{概况}
 \subsection{选题说明（本章节作者：高飞宇）}
-自然语言处理（Natural Language Processing, NLP）是计算机科学领域与人工智能领域中的一个重要方向，它研究能实现人与计算机之间用自然语言进行有效通信的各种理论和方法。选修该课程目的在于学习通过对文献中的文本数据进行挖掘地技能，更高效地获得知识发现，优化研究方法。\par
+自然语言处理（Natural Language Processing, NLP）是计算机科学领域与人工智能领域中的一个重要方向，它研究能实现人与计算机之间用自然语言进行有效通信的各种理论和方法。选修该课程目的在于学习通过对文献中的文本数据进行挖掘的技能，更高效地获得知识发现，优化研究方法。\par
 根据世界卫生组织最新实时统计数据，截至北京时间2022年4月7日6时30分左右，全球累计确诊新冠肺炎病例494928850例，累计死亡病例6186342例，对世界各国均产生了不可估量的影响，目前相关文献数目庞大，但我们对其了解还不够深入。因此选取该课题旨在高效挖掘文献摘要中的实体信息并进行知识发现，为Covid-19相关研究如致病机理、药物靶点、疫苗研发等，提供一定的参考意义。\par
-本项目期望从文献中获取“主语-谓语-宾语”三元组构建知识图谱，利用图表学习算法挖掘出化合物与Covid-19基因的关系，如新冠病毒某个基因的表达受到某个化合物的激活作用等。\par
+本项目期望从文献中获取“主语-谓语-宾语”三元组构建知识图谱，利用图表学习算法挖掘出化合物与Covid-19相关基因的关系，如新冠病毒某个基因的表达受到某个化合物的激活作用等。\par
 
 \subsection{该算法基本原理（本章节作者：张世龙）}
 我们计划从Covid-19相关的科学文献中识别命名实体，再抽取“主语-谓词-宾语”的三元组信息，将自然语言转换为知识图谱，再使用链接预测算法挖掘基因和化合物之间的隐含信息。\par
@@ -85,17 +81,17 @@
 	\item $\mathcal{R}$：表示关系的集合；
 	\item $\mathcal{G} \subseteq \mathcal{E} \times \mathcal{R} \times \mathcal{E}$：边集，表示每对关联实体及其关系，每个元素表示为一个三元组$\langle h, r, t\rangle$，其中$h$是头实体，$r$是关系，$t$是尾实体。
 \end{itemize}\par
-链接预测的任务是利用知识图谱中的现有事实来推断缺失的关系，相当于预测三元组$\langle h, r, t\rangle$的某个缺失部分。链接预测的数据集通常是由真实世界的知识图谱采样得到的，这些采样得到的小型知识图谱也分别具有自身的结点集$\mathcal{E}$，关系集$\mathcal{R}$和边集$\mathcal{G}$。为方便研究，$\mathcal{G}$被分割为训练集$\mathcal{G}_{train}$和测试集$\mathcal{G}_{test}$。\par
+链接预测的任务是利用知识图谱中的现有事实来推断缺失的关系，相当于预测三元组$\langle h, r, t\rangle$的某个缺失部分。链接预测的数据集通常是由真实世界的知识图谱采样得到的，这些采样得到的小型知识图谱也分别具有自身的结点集$\mathcal{E}$，关系集$\mathcal{R}$和边集$\mathcal{G}$。为方便研究，$\mathcal{G}$被分割为训练集$\mathcal{G}_{train}$、验证集$\mathcal{G}_{valid}$和测试集$\mathcal{G}_{test}$。\par
 
 \subsubsection{损失函数}
-在训练中，嵌入通常是随机初始化的，然后使用梯度下降的反向传播等算法进行优化。模型还可以学习不特定于任何神经网络元素的其他共享参数（例如，神经层的权重）。链接预测算法可以作为一种有监督的学习任务，将网络中存在的边都视为正样本，不存在的连边都当作负样本，训练过程最终旨在为嵌入和共享参数找到最大化正样本的合理性同时最小化负样本的合理性的值。在训练集中的正样本表示为$\mathcal{G}_{train}$，负样本表示为$\mathcal{G}_{train}^{corr}$。损失函数需要综合考虑$\mathcal{G}_{train}$和$\mathcal{G}_{train}^{corr}$中所有关系的分数。\par
+在训练中，嵌入通常是随机初始化的，然后使用梯度下降的反向传播等算法进行优化。模型还可以学习不特定于任何神经网络元素的其他共享参数（例如，神经层的权重）。链接预测算法可以作为一种有监督的学习任务，将网络中存在的边都视为正样本，不存在的边都当作负样本，训练过程最终旨在为嵌入和共享参数找到最大化正样本的合理性同时最小化负样本的合理性的值。在训练集中的正样本表示为$\mathcal{G}_{train}$，负样本表示为$\mathcal{G}_{train}^{corr}$。损失函数需要综合考虑$\mathcal{G}_{train}$和$\mathcal{G}_{train}^{corr}$中所有关系的分数。\par
 负对数似然（Negative Log-Likelihood，NLL）是一种标准的损失函数，且在链接预测领域广泛流行：
 $$\mathcal{L}=\sum_{\langle h, r, t\rangle \in \mathcal{G}_{\text {train }} \cup \mathcal{G}_{\text {train }}^{c o r r}} \log \left(1+e^{-y_{h r t} \phi(\boldsymbol{h}, \boldsymbol{r}, t)}\right)$$
 其中当$\langle h, r, t\rangle \in \mathcal{G}_{train}$时，$y_{hrt}=+1$；当$\langle h, r, t\rangle \in \mathcal{G}_{train}^{corr}$时，$y_{hrt}=-1$。在这个公式中，得分较高的阳性样本会降低$\mathcal{L}$，而得分较高的阴性样本会增加$\mathcal{L}$。因此，最小化$\mathcal{L}$意味着最大化训练集正样本的分数，同时最小化训练集负样本的分数。\par
 
 \subsubsection{链接预测方法}
 根据不同方法的损失函数和空间复杂度，链接预测方法可以分为3大类，分别是张量分解模型、几何模型和深度学习模型\cite{link_prediction}。\par
-深度学习模型使用深度神经网络来执行链接预测任务。在链接预测领域，知识图谱嵌入通常与层的权重和偏差一起学习，这些共享参数使这些模型更具表现力，但训练时间可能更长，更容易过度拟合。根据他们使用的神经网络结构，可以为分为三种：（i）卷积神经网络，（ii）胶囊神经网络，以及（iii）递归神经网络（RNN）\cite{link_prediction}。\par
+深度学习模型使用深度神经网络来执行链接预测任务。在链接预测领域，知识图谱嵌入通常与层的权重和偏差一起学习，这些共享参数使这些模型更具表现力，但训练时间可能更长，更容易过度拟合。根据他们使用的神经网络结构，可以分为三种：（i）卷积神经网络，（ii）胶囊神经网络，以及（iii）递归神经网络（RNN）\cite{link_prediction}。\par
 在以上三种网络模型中，卷积神经网络是用于链接预测实例最多的神经网络模型。这些模型依靠卷积层对输入数据（例如，知识图谱训练集关系中的嵌入）进行卷积，并应用低维滤波器$\omega$。结果是一个特征图，然后通常将其传递到其他网络层，以计算关系分数。我们的项目中可能会使用卷积神经网络作为深度学习模型完成链接预测任务。\par
 胶囊神经网络由一组称为胶囊的神经元组成，胶囊对输入的特定特征进行编码，例如图像中特定物体的存在。Capsnet可以像卷积网络那样识别这些特征，而不会丢失空间信息。每个胶囊将其输出发送到更高阶的胶囊，连接由动态路由过程决定。\par
 递归神经网络使用一个或多个重复层来分析从训练集中提取的整个路径（事实序列），而不是单独处理单个事实。循环跳过网络（RSN）是专门为链接预测算法设计的一种RNN。由于实体和关系的变化，基本RNN可能不适用于链接预测，因此作者提出了一个新的层来积极考虑这一方面。由此产生的RSN模型通过有偏随机游动学习从训练集中提取的整个路径，并使用一种特别优化的基于类型的NCE损失。\par
@@ -111,11 +107,11 @@ $$\mathcal{L}=\sum_{\langle h, r, t\rangle \in \mathcal{G}_{\text {train }} \cup
 \subsubsection{评估指标}
 在知识表示学习领域，普遍采用链接预测实验对模型的效果进行评估。在链接预测预测任务中，我们需要将测试集中的每个三元组$\langle h, r, t\rangle$中的头实体（$h$）或尾实体（$t$）依次替换为字典里的所有实体。这些替换后的三元组被称为 corrupted triplets，即损坏的三元组。然后我们通过模型的评分函数对这些 corrupted triplets 进行评分并降序排列。显然，由正确的实体构成的那个三元组的排名越靠前，说明模型对实体的预测能力就越强。\par
 对于链接预测任务，主要有 Mean Rank 和 $Hits@K$ 这两项评测指标。\par
-在完成评分排名后，找到正确的三元组，整个测试集的所有正确三元组的平均排名就作为 Mean Rank（MR）：
+在完成评分排名后，找到正确的三元组，整个测试集的所有正确三元组的平均排名就作为 Mean Rank（$MR$）：
 $$MR=\frac{1}{|Q|} \sum_{q \in Q} q$$
-由于MR对异常值极其敏感，因此逐渐被Mean Reciprocal Rank (MRR)替代：
+由于$MR$对异常值极其敏感，因此逐渐被Mean Reciprocal Rank ($MRR$)替代：
 $$MRR=\frac{1}{|Q|} \sum_{q \in Q} \frac{1}{q}$$
-而 $Hits@K$（$H@K$） 则指的是正确三元组排在前$K$名的概率，即排在前$K$的个数与总个数的比值：
+而 $Hits@K$ 则指的是正确三元组排在前$K$名的概率，即排在前$K$的个数与总个数的比值：
 $$H @ K=\frac{|\{q \in Q: q \leq K\}|}{|Q|}$$
 
 
@@ -148,13 +144,6 @@ PubTator作为一个基于web的生物类自动化文本挖掘工具，易于操
 	\label{tab:mutation}
 \end{table*}
 
-\begin{figure*}[ht!]
-	\centering
-	\includegraphics{figure/gene_mutation_visualization.pdf}
-	\caption{基因和Covid-19突变类型关联可视化。本图自绘，绘图工具：Cytoscape}
-	\label{fig:cosentence}
-\end{figure*}
-
 \begin{table*}[ht!]
 	\centering
 	\caption{基因和化合物关系。本表自绘，数据来源：统计已标注实体的共句情况}
@@ -173,12 +162,19 @@ PubTator作为一个基于web的生物类自动化文本挖掘工具，易于操
 	\label{tab:gene_mutation}
 \end{table*}
 
+\begin{figure*}[ht!]
+	\centering
+	\includegraphics[width=0.75\textwidth]{figure/gene_chemical.pdf}
+	\caption{基因和Covid-19突变类型关联可视化。本图自绘，绘图工具：Cytoscape}
+	\label{fig:cosentence}
+\end{figure*}
+
 现在，我们已经得到了PubTator对Covid-19相关文献的实体标注信息，可以对实体频次做进一步统计分析。\par
 为了推测出对Covid-19较为有效的治疗方法，我们对所有化合物标签进行统计，可以得到在这些文献样本中被讨论最多的与Covid-19相关的化合物，如表\ref{tab:mutation}所示。除此之外，我们还进行了基因和Covid-19突变类型的可视化，如图\ref{chap:cosentence}所示。\par
 这些化合物可能对Covid-19的治疗有一定帮助，因此对这些化合物进行分析，对数据进行筛选后，发现出现次数较多的化合物可分为两类，一类是Covid-19相关基因的靶标化合物，另一类是抗RNA病毒感染的化合物。Covid-19为正链RNA病毒，也从一定程度上证明这些化合物可能与Covid-19的治疗相关。\par
-Remdesivir是一种核苷酸模拟前药，具有广泛的抗病毒活性，在治疗恒河猴SARS-CoV-2感染模型中发现，Remdesivir治疗的动物的肺病毒载量较低，对肺的损害也有所减少\cite{PPR:PPR151409}，这对于Covid-19的临床治疗有极大的参考意义。酒精（alcohol）一直以来也被认为是肺部病理生理学的一个促成因素，酒精肺是COVID-19易感性和严重程度的负面后果的极有可能并发症\cite{BAILEY202111}，所以在Covid-19大流行期间，alcohol的合理使用也是值得讨论的问题。\par
-实体频次统计过程中，发现的出现次数较多的化合物可能对Covid-19的治疗有显著作用，通过研究这些化合物或可发现Covid-19治疗的新方法。\par
-实体频次统计过程中发现，同义实体可能具有多个名称，例如Spike、S protein和S都表示新冠病毒的刺突蛋白，coronavirus disease 2019、Covid-19和covid都表示新型冠状病毒肺炎。在老师的建议下，我们使用PubTator标注的ID作为该实体的标识符。此时需要为存在多个同义词的ID确认名称，该工作我们选择了人工进行。\par
+Remdesivir是一种核苷酸模拟前药，具有广泛的抗病毒活性，在治疗恒河猴SARS-CoV-2感染模型中发现，Remdesivir治疗的动物的肺病毒载量较低，对肺的损害也有所减少\cite{PPR:PPR151409}，这对于Covid-19的临床治疗有极大的参考意义。酒精（alcohol）一直以来也被认为是肺部病理生理学的一个促成因素，酒精肺是Covid-19易感性和严重程度的负面后果的极有可能并发症\cite{BAILEY202111}，所以在Covid-19大流行期间，alcohol的合理使用也是值得讨论的问题。\par
+实体频次统计过程中，出现次数较多的化合物可能对Covid-19的治疗有作用，通过研究这些化合物或可发现Covid-19治疗的新方法。\par
+实体频次统计过程中发现，同义实体可能具有多个名称，例如Spike、S protein和S都表示新冠病毒的刺突蛋白，coronavirus disease 2019、Covid-19和covid都表示新型冠状病毒肺炎。老师建议我们使用PubTator标注的ID作为该实体的标识符，此时需要确定同义词的标准名称。\par
 
 \subsection{共句分析（本章节作者：严晶）\label{chap:cosentence}}
 针对PubTator标注的实体，我们认为当两个实体倾向于出现在同一语句中时可以说明它们之间存在着某种潜在关联。通过Python编写的程序，我们对之前步骤中处理过的基因实体数据、化合物实体数据，以及摘要数据进行了读取，并尝试了通过判断基因与化合物是否存在于同一语句中，确定其中的潜在关联，并格式化输出了Covid-19相关的基因与化合物之间的互作关联文件，以便于后期Cytoscape的读取与可视化，部分结果如表所示。\par
@@ -189,13 +185,13 @@ Remdesivir是一种核苷酸模拟前药，具有广泛的抗病毒活性，在�
 	\item 无明显关联的基因和化合物，该情况在共句分析中同样会出现。
 \end{itemize}
 
-我们期望通过实体的共句分析，确定基因与对应化合物之间的互作关联，进而为药物靶点筛选、Covid-19病毒入侵机制的研究以及Covid-19的预防与监控提供一定程度的参考。对此，我们针对基因-化合物的互作关系在Cytoscape进行可视化，绘制了关联网络，以直观展示它们的关联信息。图中显示了Omicron与Spike有高度的关联性，而与Tip、CD20和RBM等基因关联度较低。以为Omicron例，Omicron与Spike相关联，该刺突蛋白突变可以抑制机体产生免疫应答，对病毒起到保护作用\cite{spike}，这进一步说明了Omicron化合物的存在可能与刺突蛋白的表达存在着一定的关联关系。除此之外，creatinine与C-reactive protein呈现强关联，该基因与化合物呈现的高度相关性在众多文献中均有证明，因此也从一定程度上说明了本实验的可靠性。同时，ACE2（血管紧张素转化酶2）基因已被证明是新冠病毒刺突蛋白感染细胞的主要受体，serine、aldosterone等化合物与ACE2基因的高度关联性也为我们从新冠病毒有关化合物与基因的相互作用入手探索新冠病毒变体感染力改变的关键因素提供了一定的参考。\par
+我们期望通过实体的共句分析，确定基因与对应化合物之间的互作关联，进而为药物靶点筛选、Covid-19病毒入侵机制的研究以及Covid-19的预防与监控提供一定程度的参考。对此，我们针对基因-化合物的互作关系在Cytoscape进行可视化，绘制了关联网络，以直观展示它们的关联信息。图中显示了Omicron与Spike有高度的关联性，而与Tip、CD20和RBM等基因关联度较低。以Omicron例，Omicron与Spike相关联，该刺突蛋白突变可以抑制机体产生免疫应答，对病毒起到保护作用\cite{spike}，这进一步说明了Omicron化合物的存在可能与刺突蛋白的表达存在着一定的关联关系。除此之外，creatinine与C-reactive protein呈现强关联，该基因与化合物呈现的高度相关性在众多文献中均有证明，因此也从一定程度上说明了本实验的可靠性。同时，ACE2（血管紧张素转化酶2）基因已被证明是新冠病毒刺突蛋白感染细胞的主要受体，serine、aldosterone等化合物与ACE2基因的高度关联性也为我们从新冠病毒有关化合物与基因的相互作用入手探索新冠病毒变体感染力改变的关键因素提供了一定的参考。\par
 共句分析只能表明某两个实体之间存在关联，但不能确定关系的类别。下面我们将抽取关系生成“主语-谓词-宾语”三元组，生成知识图谱来助力隐含信息挖掘。\par
 
 \subsection{三元组抽取（本章节作者：张世龙）\label{chap:triple}}
 
 至此为止，我们已经获得了哪些实体倾向于出现在同一语句中，即已经获取了“主语-谓词-宾语”三元组中的主语和宾语，而谓词包含了两个实体之间的关系，对于知识推理非常重要。本章节中，我们主要研究完整三元组的抽取方法。\par
-spaCy是自然语言处理方面的一个Python库，它包含多种已训练的模型，以此来执行执行一些与NLP相关的任务，例如词性标记、命名实体识别和依存关系解析。spaCy以其高功能性和高灵活度著称，开发者自行训练的模型或开发的插件等都可以方便地接入spaCy，这极大地提高了spaCy在生物医学文本上的适用性。\par
+spaCy是自然语言处理方面的一个Python库，它包含多种已训练的模型，以此来执行一些与NLP相关的任务，例如词性标记、命名实体识别和依存关系解析。spaCy以其高功能性和高灵活度著称，开发者自行训练的模型或开发的插件等都可以方便地接入spaCy，这极大地提高了spaCy在生物医学文本上的适用性。\par
 
 \subsubsection{模型选用}
 在自然语言处理研究中，使用领域专业文本训练的模型准确率会得到极大地提高。ScispaCy便是一个以spaCy为基础开发的Python库，其中包含了用于处理生物医学、科学或临床文本的spaCy模型。我们分别使用了spaCy模型en\_core\_web\_sm和ScispaCy模型en\_core\_sci\_sm对同一文本的命名实体识别进行测试，查看两个模型的实体识别准确度。\par
@@ -234,6 +230,10 @@ In this work, we have found that the prodrug \fbox{HAO472} directly binds to \fb
 	\item \textbf{Nsp9} binds establishing replacement \textbf{ester}
 \end{itemize}\par
 在此做法的情况下，完美避开了\ref{chap:dep}节所述的“HAO472 the ester”这样的错误SDP。\par
+
+% command
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
 
 \begin{algorithm}[htb]
 	\caption{多候选实体的SDP搜索算法}
@@ -290,15 +290,15 @@ In this work, we have found that the prodrug \fbox{HAO472} directly binds to \fb
 		\hline
 		负边采样数量 & 隐藏层维度 & 学习率 & $MR$ & $MRR$ & $Hits@1$ & $Hits@3$ & $Hits@10$\\
 		\hline
-		30 & 100 & 0.1 & 0.0575 & 482.8872 & 0.0000 & 0.0658 & 0.1879\\
-		30 & 200 & 0.2 & 0.0671 & 500.0998 & 0.0019 & 0.0821 & 0.2135\\
-		40 & 100 & 0.2 & 0.0609 & 526.0646 & 0.0004 & 0.0749 & 0.1950\\
-		40 & 200 & 0.1 & 0.0630 & 517.4135 & 0.0003 & 0.0697 & 0.2142\\
-		40 & 200 & 0.2 & 0.0714 & 511.7441 & 0.0032 & 0.0941 & 0.2149\\
-		50 & 200 & 0.2 & 0.0662 & 514.1957 & 0.0014 & 0.0808 & 0.2123\\
-		40 & 300 & 0.2 & 0.0699 & 496.6628 & 0.0037 & 0.0873 & 0.2173\\
-		40 & 200 & 0.3 & 0.0717 & 529.3011 & 0.0070 & 0.0955 & 0.2044\\
-		50 & 300 & 0.3 & 0.0746 & 511.1198 & 0.0092 & 0.0947 & 0.2199\\
+		30 & 100 & 0.1 & 0.0575 & 482.8872 & 0.0000 & 0.0658 & 0.1879 \\
+		30 & 200 & 0.2 & 0.0671 & 500.0998 & 0.0019 & 0.0821 & 0.2135 \\
+		40 & 100 & 0.2 & 0.0609 & 526.0646 & 0.0004 & 0.0749 & 0.1950 \\
+		40 & 200 & 0.1 & 0.0630 & 517.4135 & 0.0003 & 0.0697 & 0.2142 \\
+		40 & 200 & 0.2 & 0.0714 & 511.7441 & 0.0032 & 0.0941 & 0.2149 \\
+		50 & 200 & 0.2 & 0.0662 & 514.1957 & 0.0014 & 0.0808 & 0.2123 \\
+		40 & 300 & 0.2 & 0.0699 & 496.6628 & 0.0037 & 0.0873 & 0.2173 \\
+		40 & 200 & 0.3 & 0.0717 & 529.3011 & 0.0070 & 0.0955 & 0.2044 \\
+		50 & 300 & 0.3 & 0.0746 & 511.1198 & 0.0092 & 0.0947 & 0.2199 \\
 		\hline
 	\end{tabular}
 	\label{tab:hyper}
@@ -318,7 +318,7 @@ DGL-KE库存在2个问题：\par
 	\item 使用$\langle h, *, *\rangle$或$\langle *, *, t\rangle$模式进行预测时，只能得到前$K$个自环的三元组，需要对头实体和尾实体是否一致加以判断（尚未解决，所以暂时只能使用一个未知参数进行预测）。
 \end{enumerate}\par
 三元组中不同基因和化合物的出现频次有较大差距，例如Remdesivir出现50次，Ritonavir出现9次，Nirmatrelvir出现5次。实体出现频次的差异可能导致预测结果的偏好性，即预测出的缺失三元组总是出现频次较高的实体。为了解决这一问题，我们原计划降低出现次数较多的实体，例如研究Nirmatrelvir时，对Remdesivir出现的三元组进行抽样，降低出现频次，但我们较少的数据量不足以支持这一想法。因此，我们仍选择全部三元组训练模型，但我们可以指定头实体和尾实体来预测关系类型（预测模式$\langle h, *, t\rangle$），避免实体频次对预测结果的影响。\par
-我们随机选取20\%的三元组作为测试集，再采取五折交叉验证计算模型$MR$、$MRR$、$Hits@1$、$Hits@3$和$Hits@10$五个指标的平均值，以确定模型的较优超参数。表\ref{tab:hyper}列出了我们所测试的不同超参数（负边采样数量、隐藏层维度和学习率）对模型效果的影响。这些超参数在对应的小范围内变化时，对模型效果的影响很小。在总体上看，将隐藏层维度在100-300范围内提高时，预测准确率有一定提升。\par
+我们随机选取20\%的三元组作为测试集，再采取五折交叉验证计算TransE模型$MR$、$MRR$、$Hits@1$、$Hits@3$和$Hits@10$五个指标的平均值，以确定模型的较优超参数。表\ref{tab:hyper}列出了我们所测试的不同超参数（负边采样数量、隐藏层维度和学习率）对模型效果的影响。这些超参数在对应的小范围内变化时，对模型效果的影响很小。在总体上看，将隐藏层维度在100-300范围内提高时，预测准确率有一定提升。\par
 
 \subsubsection{关系类型预测}
 下面我们将超参数设置为，负边采样数量30，隐藏层维度300，学习率0.2，批次大小100。我们选取已知关系的基因和化合物（没有直接出现在知识图谱中），查看预测结果是否与已知关系一致，以检查模型的效果。\par
@@ -338,32 +338,33 @@ DGL-KE库存在2个问题：\par
 	\end{itemize}
 	对于预测模式$\langle \textnormal{Ritonavir}, *, \textnormal{CYP3A4}\rangle$，我们期望得到的结果是，Ritonavir能抑制人体内靶向蛋白酶抑制剂的CYP3A4。预测结果显示Ritonavir能够结合CYP3A4并对CYP3A4的功能有负面影响。事实上，Ritonavir是CYP3A4的底物和抑制剂，在HIV感染引起的慢性病毒性肝炎中显著地损害CYP3A的活性\cite{ritonavir1, ritonavir2}。因此，我们得到了一个可能正确的预测结果。
 \end{enumerate}\par
-我们很高兴能够得到这样的结果。但是由于数据量过小，我们很难保证预测结果的可靠性，也就是说，运气也是得到正确预测结果的一个重要因素。原本认为81290篇文献的标题和摘要，以及994561条PubTator标注已能够满足我们的需求，我们没有想到抽取出能够通过质量检测的基因-化合物三元组仅有3509条，因此命名实体识别和关系识别的优化是该项目中仍需解决的问题。
+我们很高兴能够得到这样的结果。但是由于数据量过小，我们很难保证预测结果的可靠性，也就是说，运气也是得到正确预测结果的一个重要因素。原本认为81290篇文献的标题和摘要，以及994561条PubTator标注已能够满足我们的需求，我们没有想到抽取出能够通过质量检测的基因-化合物三元组仅有3509条，因此命名实体识别和关系识别的优化是该项目中仍需解决的问题。\par
 
 
 \section{后记}
 
 \subsection{课程论文构思和撰写过程（本章节作者：高飞宇）}
-本次课程项目主要是对海量Covid-19相关文献进行挖掘，并对在其中获得与化合物、基因相关的实体进行标注、统计、分析和抽取，发现潜在的、隐含的知识。我们首先使用NCBI提供的Entrez获取到与Covid-19相关文献的81290条PMID，调用PubTator的API获取相关文献的标题、摘要和实体标注结果。对相关实体进行频次统计，得到出现次数最多的化合物，认为这些化合物对Covid-19的治疗有显著关系，并可以为其治疗提供新思路。当两个实体倾向于出现在同一语句中时，可以从一定程度上说明其存在潜在关系，因此通过分析基因与化合物的互作关联，可以为药物靶点筛选、Covid-19病毒入侵机制的研究以及Covid-19的预防与监控提供一定程度的参考。但共句分析只能说明两个实体字间存在关联，并不能确定其关系类别，因此我们进一步对其进行了三元组抽取，这也是本次课程项目的核心步骤。我们从文献中获取“主语-谓语-宾语”三元组构建知识图谱，进行句法依存分析、多候选实体的SDP搜索以及修饰词限制性选用，以此得到最终实体之间的精确关系。同时本次的项目也能够解决人工阅读文献费时费力且效率不高有信息遗漏等问题，挖掘出大量信息，为Covid-19相关药物以及意面研发等科学研究提供一定的参考意义。\par
+本次课程项目主要是对海量Covid-19相关文献进行挖掘，并对在其中获得与化合物、基因相关的实体进行标注、统计、分析和抽取，发现潜在的、隐含的知识。我们首先使用NCBI提供的Entrez获取到与Covid-19相关文献的81290条PMID，调用PubTator的API获取相关文献的标题、摘要和实体标注结果。对相关实体进行频次统计，得到出现次数最多的化合物，认为这些化合物对Covid-19的治疗有显著关系，并可以为其治疗提供新思路。当两个实体倾向于出现在同一语句中时，可以从一定程度上说明其存在潜在关系，因此通过分析基因与化合物的互作关联，可以为药物靶点筛选、Covid-19病毒入侵机制的研究以及Covid-19的预防与监控提供一定程度的参考。但共句分析只能说明两个实体字间存在关联，并不能确定其关系类别，因此我们进一步对其进行了三元组抽取，这也是本次课程项目的核心步骤。我们从文献中获取“主语-谓语-宾语”三元组构建知识图谱，进行句法依存分析、多候选实体的SDP搜索以及修饰词限制性选用，以此得到最终实体之间的精确关系。最终使用图表示学习算法，尝试挖掘出Covid-19相关基因与化合物之间的潜在关系。\par
 
 \subsection{所参考主要资源（本章节作者：张世龙）}
 目前，我们参考的主要资源主要有：
 \begin{itemize}
 	\item 夏老师提供的《生物文本挖掘与知识发现概论》Course Note，我们主要参考了“依存树和最短依存距离计算的方法”；
-	\item 链接预测算法的介绍和基本原理，我们主要参考了\cite{link_prediction}。
+	\item 链接预测算法的介绍和基本原理，我们主要参考了\cite{link_prediction}；
+	\item DGL-KE文档：\url{https://dglke.dgl.ai/doc/}；
+	\item DGL-KE在PyTorch 1.11.0版本下兼容性问题的解决方法：\url{https://issuemode.com/issues/awslabs/dgl-ke/826685#answer-1425420}。
 \end{itemize}
 
 \subsection{论文选题与课程内容的对应关系（本章节作者：严晶）}
-考虑到论文选题Covid-19的文献的数量级，我们在课堂老师介绍的手动搜索并复制粘贴PMID进行实体数据下载的基础上进行了改进，选择了使用Python的BioPython库中的Entrez检索库，通过设置文献筛选的限制条件，包括词汇匹配以及时间限制等，快速高效地从PubMed上获取了满足条件的文献PMID。\par
-实体获取参考了课程所讲授的内容，即获取文献PMID后，编写脚本利用PubTator工具获取对应文献的标题和摘要信息，再针对获取的信息进行分析处理，提取有关实体信息，不同之处在于我们并未直接使用课程老师介绍的脚本，而是在完全理解课堂的Shell脚本的原理之后自主编写了Python脚本。\par
+实体获取参考了课程讲义的内容，即获取文献PMID后，编写脚本利用PubTator工具获取对应文献的标题和摘要信息，再针对获取的信息进行分析处理，提取有关实体信息，不同之处在于我们并未直接使用课程老师介绍的脚本，而是在完全理解Shell脚本的原理之后自主编写了Python脚本。\par
 除了课堂讲授的PubTator实体抽取，我们还补充了实体词频分析、共句分析、三元组抽取等分析方法去实现Covid-19文献的知识挖掘。其中，句法依存树的构建和SDP的方法参考了课程讲义的第9章“Advanced NLP Topic in Dependency Tree and Shortest Dependency Path”。\par
-在本项目中，所有代码内容均为在充分理解和参透课堂内容的基础上自主编写完成。\par
+在本项目中，除DGL-KE开源库外，所有代码内容均为在充分理解和参透课堂内容的基础上自主编写完成。\par
 
 \subsection{代码撰写的构思和体会（本章节作者：张世龙）}
 本项目中涉及的论文撰写工作主要有：调用Entrez API获取PMID，调用PubTator API获取标题和摘要的注释信息，实体频次统计和共句统计，实体关系抽取（SDP的实现和扩展），基于PyG的链接预测算法。\par
 代码撰写的难点主要在于对陌生开源库不熟悉，需要不断地查询API文档，而有些API文档不便于理解，还需要在网上查询他人对API的使用方法。\par
 实体关系抽取一节，夏老师提供了使用spaCy分析语句并构建句法依存树的方法，我们使用了这些代码。在使用spaCy的自带模型en\_core\_web\_sm时，我们发现它对生物医学文本命名实体识别和句法分析的效果很差，甚至连新冠病毒肺炎也无法识别。随后我们发现了ScispaCy库的en\_core\_sci\_sm模型，它是基于生物医学文本训练的，能够胜任我们Covid-19文献挖掘的任务。夏老师的讲义给了我们很大的灵感，使用SDP来发现两个实体之间的关系的确是一种好办法。但我们发现传统的SDP方法在涉及多个实体时只能识别正确一部分关系，且识别出的关系表意不明，因此我们提出了多候选实体的SDP搜索算法，改善了实体数量较多时的关系识别。除此之外，我们还为关系加入了名词、形容词和副词词性的修饰词，期望获得更加准确的实体关系。\par
-链接预测算法一节，PyG是一个基于PyTorch构建的库，专业于图神经网络，为我们提供了极大的方便。该部分代码将在下次论文提交前实现。
+链接预测算法一节，使用了开源库DGL-KE。该库完成了良好的封装，可以在命令行调用。我们在此基础上完成了交叉验证的代码。\par
 
 \subsection{人员分工（本章节作者：张世龙）}
 论文构思：共同讨论。\par
@@ -374,35 +375,34 @@ DGL-KE库存在2个问题：\par
 优点：\par
 \begin{itemize}
 	\item 聚焦于Covid-19有关基因与化合物的互作关联，从一个新的角度为新冠病毒的治疗与预防提供了一定的参考方向；
-	\item 通过Python脚本的编写解决了PubMed网站上直接下载获取PMID上限10000的局限性，且大大降低了获取PMID所需的时间成本；
 	\item 基因-化合物的互作关联知识图谱的绘制直观地展示了基因与化合物之间的关联关系，对于有关基因和化合物的研究提供了便利；
-	\item 通过有效的实体关系识别算法识别正相关或负相关关系，生成了“主语-谓词-宾语”三元组，确定了实体之间存在的关系类别。
+	\item 通过有效的实体关系识别算法，生成了“主语-谓词-宾语”三元组，确定了实体之间存在的关系类别。
 \end{itemize}\par
 缺点：\par
 \begin{itemize}
-	\item 命名实体识别中存在着异名同义的现象，但在本项目中对该问题有所忽视，因此未能及时解决其带来的有关问题；
 	\item PubTator相较于BERT+CRF等神经网络训练出来的模型效果稍有欠缺，但由于时间原因，我们在本次项目中舍弃了效果更佳的方案，而采用操作更为方便的PubTator；
-	\item 对于基因与化合物的互作分析研究仅涉及文献单个层面，其可靠性仍然有待考量。
+	\item 对于基因与化合物的知识发现只是依靠于较少的三元组，其可靠性仍然有待考量。
 \end{itemize}\par
 
 \subsection{假设多出30个工作日，这个课程论文的撰写改进思路和周工作计划（本章节作者：严晶）}
 若时间充足，后续课程论文撰写改进将从技术层面以及论文层面两个方向进行改进：\par
 技术层面：
 \begin{itemize}
-	\item 针对命名实体异名同义的问题，寻找更为行之有效的算法进行改进，或者寻找已发布的有关标准化文件，手动进行规范化，如果搜寻不到则自己定义标准化文件。
-	\item 使用链接预测算法，挖掘隐含的化合物和基因之间的关系。
-	\item 在现有的基础上，从更多不同的角度去挖掘基因与化合物之间的关系。
+	\item 提高数据量；
+	\item 使用更先进的命名实体识别和关系抽取算法，提取出更多的三元组；
+	\item 深化修饰词限制性选用部分；
+	\item 选择更优的图表示学习算法，挖掘更多、更可靠的隐含信息。
 \end{itemize}\par
 论文层面：
 \begin{itemize}
-	\item 查阅项目有关文献，使论文撰写中所使用的词汇更加规范化与专业化。
+	\item 查阅项目有关文献，使论文撰写中所使用的词汇更加规范化与专业化；
 	\item 反复斟酌论文内容与格式，确保内容清晰，格式正确。
 \end{itemize}\par
 周工作计划如下：\par
 \begin{enumerate}
-	\item 针对命名实体异名同义的问题，在周五前各组员查询相关文献，若不能查找到具体行之有效的算法或标准化文件，则选择在周末集体讨论制定由本组成员自己定义的标准化文件，并投入使用；同时，在查阅文献的过程中，注意文献有关内容的用词，及时对论文撰写中不规范的用词与内容进行修改。（1-7）
-	\item 通过查阅书籍或者利用CSDN、GitHub网站寻找实体关系识别算法，比较不同算法的优缺点，在现有算法上进行改进或者选择适合本项目且更为准确的算法投入使用，更为具体地确定基因与化合物的关系类型。（8-17）
-	\item 尝试从其他角度去挖掘基因与化合物之间的关系，例如通过挖掘基因表达的有关信息将两者相联系起来，这部分可能具有一定的挑战性，因此尽力而为则可。（18-27）
+	\item 针对命名实体异名同义的问题，需要定制标准名称。（1-7）
+	\item 通过查阅书籍或者利用CSDN、GitHub网站寻找实体关系识别算法，比较不同算法的优缺点，在现有算法上进行改进或者选择适合本项目且更为准确的算法投入使用，更为具体地确定基因与化合物的关系类型。（8-14）
+	\item 深化修饰词限制性选用部分，选择更优的图表示学习算法，挖掘更多、更可靠的隐含信息。（15-27）
 	\item 查阅项目有关文献，规范化用词，反复斟酌内容格式，确保内容清晰，格式正确。（28-30）
 \end{enumerate}
 
@@ -411,63 +411,54 @@ DGL-KE库存在2个问题：\par
 \bibliography{citation.bib}% Produces the bibliography via BibTeX.
 
 
-\section{\label{chap:supp}附录}
+\section{附录\label{chap:supp}}
 
 \subsection{Checklist for ethics, societal impact and reproducibility issues (请检查并简要回答)}
 
 \subsubsection{本文是否提到了工作的局限性？如果有，请指出相关章节。}
-答：是。\ref{data_access}节提出PubTator请求限制导致标注数据获取速度慢的问题，\ref{chap:entity_count}节提出PubTator实体标注结果存在异名同义的问题，\ref{chap:cosentence}节提出共句分析无法确定关系的类别的问题。\ref{chap:entity_count}节和\ref{chap:cosentence}节中我们提出了可能的解决方案。
+答：是。\ref{chap:embedding}节提出，由于我们数据量较少，且抽取三元组步骤损失了大量数据，难以得到可靠的预测结果。
 \subsubsection{本研究工作有无任何潜在风险，是否在文中被提到？}
 答：无。
 \subsubsection{文章的摘要是否能较好概括本文的工作？}
 答：是。
 \subsubsection{本工作是否产生了自己的数据或方法？如果有相关介绍，请指出相关章节。}
-答：是。
+答：是。\ref{data_access}节产生了Covid-19相关的PubTator文献标注数据，\ref{chap:embedding}产生了知识图谱的训练集、验证集和测试集。
 \subsubsection{本工作是否使用并介绍了已有的数据或方法？如果有，请指出相关章节。}
-答：是。\ref{data_access}节文献pmid来源于NCBI Entrez，实体标注数据来源于PubTator。
+答：是。\ref{data_access}节文献pmid来源于NCBI Entrez，实体标注数据来源于PubTator；\ref{chap:embedding}节使用了开源库DGL-KE。
 \subsubsection{如果使用了已有的数据或方法，是否介绍了相关使用条款？}
-答：是。\ref{data_access}节中PubTator要求每秒请求不能多于3次，我们遵守了该规则。
+答：是。\ref{data_access}节中PubTator要求每秒请求不能多于3次，我们遵守了该规则；\ref{chap:embedding}节中DGL-KE要求遵守Apache-2.0 License。
 \subsubsection{本文是否介绍了所使用数据的基本统计结果，例如 train/test/dev？}
 答：是。
 \subsubsection{本工作是否使用了代码计算，如果有，是否介绍了运行环境和运行时间？如果有，请指出相关章节。}
-答：是。操作系统环境为Windows 11 21H2，\ref{data_access}节、\ref{chap:entity_count}节、\ref{chap:cosentence}节和\ref{chap:triple}节在Python 3.7.13运行，使用了Python库Biopython、requests、spaCy、ScispaCy和NetworkX。
+答：是。操作系统环境为Windows 11 21H2，特殊地，\ref{chap:embedding}节使用的DGL-KE在Linux 子系统 Ubuntu 20.04.3 LTS (WSL2)运行，使用了Python库Biopython、requests、spaCy、ScispaCy、NetworkX、PyTorch、matplotlib和DGL-KE。
 
 
 \subsection{关键代码（本章节作者：张世龙）}
 
-全部代码为自主编写。\par
+除开源库DGL-KE外，全部代码为自主编写。\par
 {\bf Codes availability:} \url{https://github.com/zhang-shilong/BioNLP-course}。\par
 以下是Github项目README.md的内容。\par
 这里是第 2 组，选题为《图表示学习在Covid-19文献挖掘和知识发现中的应用》，通过以下步骤，您可以快速地了解或再现我们的实验。\par
 \subsubsection{环境安装}
 我们所用的环境是 Python 3.7.13。\par
-下载我们所用的 Python 库，包括Biopython、requests、spaCy、ScispaCy和NetworkX。\par
+通过 `requirements.txt` 下载我们所用的 Python 库与 spaCy 模型。其中 en\_core\_web\_sm 仅用于对比，实验中实际使用的的模型是 en\_core\_sci\_sm。\par
 \begin{lstlisting}
 conda create -n bionlp python=3.7.13
 conda activate bionlp
 pip install -r requirements.txt
+# python -m spacy download en_core_web_sm
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz
 \end{lstlisting}
-\subsubsection{文献PMID获取}
-以“Covid-19”为检索条目，要求出版时间为 2021 年 7 月 1 日至 2022 年 3 月 1 日，从 Entrez 获取 PMID，输出到 Covid-19\_pmid.txt。
-\begin{lstlisting}
-python entrez_access.py
-\end{lstlisting}
-\subsubsection{PubTator 实体标注}
-调用 PubTator API，从 PubTator 检索 PMID，获取标题、摘要和实体标注信息，输出到 Covid-19\_pubtator。
-\begin{lstlisting}
-python pubtator_access.py
-\end{lstlisting}
-\subsubsection{实体频次统计}
-统计实体频次。
-\begin{lstlisting}
-python entity_count.py
-\end{lstlisting}
-\subsubsection{共句分析}
-我们对 PubTator 标注的实体进行共句分析，期望找到基因和 Covid-19 突变类型的关系，并将结果输出为 Cytoscape 可以读取的信息，进行可视化。
-\begin{lstlisting}
-python entity_relation.py
-\end{lstlisting}
-\subsubsection{小结}
-以上是长文中涉及的代码实现。
+\subsubsection{程序介绍}
+本项目包含以下代码文件：\par
+\begin{description}
+	\item[entrez\_access.py] 访问 Entrez API，获取文献 PMID；
+	\item[pubtator\_access.py] 访问 PubTator API，获取文献的标题和摘要标注；
+	\item[entity\_counter.py] 实体计数；
+	\item[entity\_relation.py] 共句关系计数；
+	\item[relation\_extraction.py] 三元组抽取；
+	\item[DGL-KE\_calling.py] 对 DGL-KE 的调用，实现了交叉验证和预测。
+\end{description}\par
+以上是长文（终稿）中涉及的代码实现。
 
 \end{document}

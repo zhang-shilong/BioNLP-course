@@ -1,0 +1,12 @@
+.git/
+.idea/
+data/
+model/
+result.tsv
+CoursePaper/*.aux
+CoursePaper/*.bbl
+CoursePaper/*.blg
+CoursePaper/*.log
+CoursePaper/*.out
+CoursePaper/*.pdf
+CoursePaper/*.synctex.gz

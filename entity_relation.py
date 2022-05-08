@@ -57,7 +57,7 @@ for article in articles:
                             relation[relation_key] = {"count": 1, "type": relation_type}
                         else:
                             relation[relation_key]["count"] += 1
-                if relation_type == "Chemical~Gene":
+                if relation_type == "Chemical~Gene":  # and relation_key.split("~")[0] == "tocilizumab":
                     out.write("s|" + para[sep[cur_pos-1]:sep[cur_pos]].encode('gbk', 'ignore').decode('gbk') + "\n")
                     line = []
                     for k, v in tmp.items():
@@ -68,5 +68,5 @@ for article in articles:
 
 # sorted_relation = sorted(relation.items(), key=lambda x: x[1]["count"])
 # for k, v in sorted_relation:
-#     if v["type"] == "Chemical~Gene":
+#     if v["type"] == "Chemical~Gene" and k.split("~")[0] == "tocilizumab":
 #         print("\t".join(k.split("~")) + "\t" + v["type"])

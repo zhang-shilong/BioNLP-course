@@ -1,17 +1,19 @@
 # BioNLP-course
 
-这里是第 2 组，选题为《针对 Covid-19 的文献挖掘和知识发现》，通过以下步骤，您可以快速地了解或再现我们的实验。
+这里是第 2 组，选题为《图表示学习在 Covid-19 文献挖掘和知识发现中的应用》，通过以下步骤，您可以快速地了解或再现我们的实验。
 
 ## 环境安装
 
 我们所用的环境是 Python 3.7.13。
 
-下载我们所用的 Python 库，包括 Biopython 和 requests：
+通过 `requirements.txt` 下载我们所用的 Python 库与 spaCy 模型。其中 en_core_web_sm 仅用于对比，实验中实际使用的的模型是 en_core_sci_sm。
 
 ```shell
 conda create -n bionlp python=3.7.13
 conda activate bionlp
 pip install -r requirements.txt
+# python -m spacy download en_core_web_sm
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.0/en_core_sci_sm-0.5.0.tar.gz
 ```
 
 ## 文献 PMID 获取
@@ -48,6 +50,5 @@ python entity_relation.py
 
 ## 小结
 
-以上是短文中涉及的代码实现。
-
+以上是长文（修订稿）中涉及的代码实现。
 

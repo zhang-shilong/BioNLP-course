@@ -62,7 +62,7 @@
 \maketitle
 
 \begin{abstract}
-新型冠状病毒肺炎（Covid-19）自从被发现以来，经历了地方性流行、流行、大流行的过程，并最终在全球范围内扩散蔓延。疫情爆发两年多以来，Covid-19已然成为最具影响力的话题之一，目前已有大量相关报道与文献。自然语言处理是一种大规模处理文献的有效手段，它研究能实现人与计算机之间用自然语言进行有效通信的各种理论和方法，而自然语言处理通过命名实体识别和实体关系识别，能够生成知识图谱以便于隐含信息挖掘。在该项目中，我们从PubTator获取文献实体标注信息开始，到知识图谱的生成，和图表示学习与信息挖掘，期望推测出化合物与Covid-19基因相关的结论。\par
+新型冠状病毒肺炎（Covid-19）自从被发现以来，经历了地方性流行、流行、大流行的过程，并最终在全球范围内扩散蔓延。疫情爆发两年多以来，Covid-19已然成为最具影响力的话题之一，目前已有大量相关报道与文献。自然语言处理技术包括命名实体识别、关系识别、语法依存树的构建、词嵌入与图嵌入的研究，是本项目的核心算法。在本项目中，我们从PubTator获取文献实体标注信息开始，到知识图谱的生成，和图表示学习与信息挖掘，期望推测出化合物与Covid-19基因相关的结论。\par
 {\bf Codes availability:} \url{https://github.com/zhang-shilong/BioNLP-course}。\par
 {\bf 关键词: NLP，Covid-19，图表示学习，知识发现}
 \end{abstract}
@@ -94,7 +94,7 @@ $$\mathcal{L}=\sum_{\langle h, r, t\rangle \in \mathcal{G}_{\text {train }} \cup
 其中当$\langle h, r, t\rangle \in \mathcal{G}_{train}$时，$y_{hrt}=+1$；当$\langle h, r, t\rangle \in \mathcal{G}_{train}^{corr}$时，$y_{hrt}=-1$。在这个公式中，得分较高的阳性样本会降低$\mathcal{L}$，而得分较高的阴性样本会增加$\mathcal{L}$。因此，最小化$\mathcal{L}$意味着最大化训练集正样本的分数，同时最小化训练集负样本的分数。\par
 
 \subsubsection{链接预测方法}
-根据不同方法的损失函数和空间复杂度，链接预测方法可以分为3大类，分别是张量分解模型、几何模型和深度学习模型\cite{link_prediction}。开源Python库PyG（PyTorch Geometric）是一个基于PyTorch的图神经网络框架，鉴于其易用性和可扩展性，我们选择PyG进行链接预测算法深度学习模型的实现。\par
+根据不同方法的损失函数和空间复杂度，链接预测方法可以分为3大类，分别是张量分解模型、几何模型和深度学习模型\cite{link_prediction}。\par
 深度学习模型使用深度神经网络来执行链接预测任务。在链接预测领域，知识图谱嵌入通常与层的权重和偏差一起学习，这些共享参数使这些模型更具表现力，但训练时间可能更长，更容易过度拟合。根据他们使用的神经网络结构，可以为分为三种：（i）卷积神经网络，（ii）胶囊神经网络，以及（iii）递归神经网络（RNN）\cite{link_prediction}。\par
 在以上三种网络模型中，卷积神经网络是用于链接预测实例最多的神经网络模型。这些模型依靠卷积层对输入数据（例如，知识图谱训练集关系中的嵌入）进行卷积，并应用低维滤波器$\omega$。结果是一个特征图，然后通常将其传递到其他网络层，以计算关系分数。我们的项目中可能会使用卷积神经网络作为深度学习模型完成链接预测任务。\par
 胶囊神经网络由一组称为胶囊的神经元组成，胶囊对输入的特定特征进行编码，例如图像中特定物体的存在。Capsnet可以像卷积网络那样识别这些特征，而不会丢失空间信息。每个胶囊将其输出发送到更高阶的胶囊，连接由动态路由过程决定。\par
@@ -178,7 +178,7 @@ PubTator作为一个基于web的生物类自动化文本挖掘工具，易于操
 这些化合物可能对Covid-19的治疗有一定帮助，因此对这些化合物进行分析，对数据进行筛选后，发现出现次数较多的化合物可分为两类，一类是Covid-19相关基因的靶标化合物，另一类是抗RNA病毒感染的化合物。Covid-19为正链RNA病毒，也从一定程度上证明这些化合物可能与Covid-19的治疗相关。\par
 Remdesivir是一种核苷酸模拟前药，具有广泛的抗病毒活性，在治疗恒河猴SARS-CoV-2感染模型中发现，Remdesivir治疗的动物的肺病毒载量较低，对肺的损害也有所减少\cite{PPR:PPR151409}，这对于Covid-19的临床治疗有极大的参考意义。酒精（alcohol）一直以来也被认为是肺部病理生理学的一个促成因素，酒精肺是COVID-19易感性和严重程度的负面后果的极有可能并发症\cite{BAILEY202111}，所以在Covid-19大流行期间，alcohol的合理使用也是值得讨论的问题。\par
 实体频次统计过程中，发现的出现次数较多的化合物可能对Covid-19的治疗有显著作用，通过研究这些化合物或可发现Covid-19治疗的新方法。\par
-实体频次统计过程中发现，同义实体可能具有多个名称，例如Spike、S protein和S都表示新冠病毒的刺突蛋白，coronavirus disease 2019、Covid-19和covid都表示新型冠状病毒肺炎。这些异名同义实体出现次数较多，可能影响后续分析结果，在下一阶段可以通过列出异名同义实体表或选择更加智能的命名实体识别算法来解决这个问题。\par
+实体频次统计过程中发现，同义实体可能具有多个名称，例如Spike、S protein和S都表示新冠病毒的刺突蛋白，coronavirus disease 2019、Covid-19和covid都表示新型冠状病毒肺炎。在老师的建议下，我们使用PubTator标注的ID作为该实体的标识符。此时需要为存在多个同义词的ID确认名称，该工作我们选择了人工进行。\par
 
 \subsection{共句分析（本章节作者：严晶）\label{chap:cosentence}}
 针对PubTator标注的实体，我们认为当两个实体倾向于出现在同一语句中时可以说明它们之间存在着某种潜在关联。通过Python编写的程序，我们对之前步骤中处理过的基因实体数据、化合物实体数据，以及摘要数据进行了读取，并尝试了通过判断基因与化合物是否存在于同一语句中，确定其中的潜在关联，并格式化输出了Covid-19相关的基因与化合物之间的互作关联文件，以便于后期Cytoscape的读取与可视化，部分结果如表所示。\par
@@ -216,7 +216,7 @@ spaCy将CoV-2识别为组织，将disease-19识别为人名，且都没有识别
 \end{figure*}
 
 \subsubsection{句法依存分析\label{chap:dep}}
-句法依存树是句法分析的重要方法，它是用来提取句子中所有从属词（dependent）的支配词（head）以及二者依存关系（dependencerelation）的方法。spaCy正提供了这种语法依存树的分析方法，且和NetworkX结合，可以简单地实现可视化和最短路径搜索。而对于如何从句法依存树中获取两个实体之间的关系，即三元组中的谓词，我们产生了不少争论。\par
+句法依存树是句法分析的重要方法，它是用来提取句子中所有从属词（dependent）的支配词（head）以及二者依存关系（dependence relation）的方法。spaCy正提供了这种语法依存树的分析方法，且和NetworkX结合，可以简单地实现可视化和最短路径搜索。而对于如何从句法依存树中获取两个实体之间的关系，即三元组中的谓词，我们产生了不少争论。\par
 我们首先想到的是使用句法依存树的根作为谓词，必要时还可以添加根的修饰词，以精确确定谓词。但是，论文摘要中的句子多是长难句，且重要内容总是出现在从句中。例如下面这个句子是论文摘要中的常见结构，通常以“我们发现了”、“我们认为”等开头，而重要内容位于宾语从句中（PubTator识别出的实体用矩形标识，句法依存树见图\ref{fig:sdp}）。从下面这个句子中获得的根是“found”，显然不是实体之间的关系，因此直接从句法依存树获取根和根的修饰词作为关系，是不合理的。\\
 In this work, we have found that the prodrug \fbox{HAO472} directly binds to \fbox{Nsp9}, establishing replacement of the labile \fbox{ester} with a bioisostere as a candidate drug strategy.\cite{hao472}\par
 既然句法依存树的根不可靠，我们计划从最短依存路径（Shortest dependency path，SDP）中抽取实体关系。SDP描述了两个实体之间的最短依存关系，其经过的路径可能就是我们要找的实体关系。令人欣慰的是，SDP在\cite{hao472}中获得了不错的结果，它得到了“HAO472 binds Nsp9”的正确结果，如果我们对谓词的修饰词加以限制性的选用，甚至可以得到“HAO472 directly binds Nsp9”这样更优秀的结果（详见\ref{chap:modifier}节）。而对于搜索多个候选实体之间的关系时，我们再次陷入了困境，如HAO472或Nsp9与ester之间有两条SDP可供选择：\par
@@ -271,20 +271,74 @@ In this work, we have found that the prodrug \fbox{HAO472} directly binds to \fb
 \subsubsection{效果评价\label{chap:dep_eva}}
 在\ref{chap:dep}节，我们得到了“\textbf{HAO472} the \textbf{ester}”这样一个匪夷所思的结果，然而HAO472和ester不可能在语法依存树上直接与the相连，这究竟是什么原因导致的呢？老师提供的将spaCy句法依存树转换为NetworkX网络的代码是不严谨的，将每个token作为结点的名称，而NetworkX会将名称相同的结点视为同一个结点并进行合并。例句中恰好有两个the，它们将HAO472和ester巧合地连接在一起。\par
 将spaCy句法依存树转换为NetworkX网络的正确途径，应该是借助spaCy库Token类的orth属性，它是spaCy为文本逐词分配的唯一ID。首先创建一个从orth到文本词语的映射字典，便于后期通过orth检索原始文本词语；再使用orth作为NetworkX网络的结点名称，构建句法依存树；最后，由于orth阅读不便，句法依存树可视化时应使用原始文本词语作为显示的结点名称。\par
-本文提出的多候选实体SDP搜索算法和修饰词选用都是基于我们对于句法的浅薄理解，可能忽略了很多句法上的问题，例如修饰词选用时其他依存关系对应的支配词也应该被选用等，能够解决的问题有限。\par
-到此为止，我们已经在三元组抽取方面讨论了模型选用、句法依存分析、多候选实体的SDP搜索和修饰词限制性选用等问题，我们尽可能地让三元组包含最多且最精确的信息。概括地说，我们首先根据NER的效果选择合适的模型，发现使用生物医学文本训练的ScispaCy效果更优；其次构建句法依存树，发现SDP得到的部分结果尚可，而对于多候选实体时只有一对实体能得到正确结果；然后对多候选实体的SDP搜索提出优化算法，使得多个候选实体都能得到正确的结果；最后精益求精，在SDP搜索路径中加入修饰词，得到了更加精确的实体关系。\par
+本章节提出的多候选实体SDP搜索算法和修饰词选用都是基于我们对于句法的浅薄理解，可能忽略了很多句法上的问题，例如修饰词选用时其他依存关系对应的支配词也应该被选用等，能够解决的问题有限。\par
 
 \subsection{图表示学习（本章节作者：张世龙）\label{chap:embedding}}
-我们已经得到了从自然语言文本中一步步抽取出的“主语-谓词-宾语”三元组信息，每个三元组实际上描述了从“主语”到“宾语”、关系为“谓词”的边，因而这些三元组共同构成了一张知识图谱。PyG（PyTorch Geometric）是一个基于PyTorch构建的库，可以方便地编写和训练图神经网络（GNN）。下面我们将使用PyG进行知识图谱的链接预测算法，尝试挖掘出潜在的“基因-化合物”信息。\par
-在该步骤中，我们计划：\par
-\begin{itemize}
-	\item 首先使用Python库DeepSNAP将NetworkX网络转换为PyTorch能够识别的数据格式，这个包提供了NetworkX到PyG的接口；
-	\item 我们计划使用有监督的链接预测算法，即将其视为二分类任务，将网络中存在的边都视为正样本，将网络中不存在的边视为负样本；训练集和测试集中都包含正样本和负样本，目的是在训练集上训练出一个模型能够准确分类这两种边，然后再在测试集上验证效果；
-	\item 由于我们得到的知识图谱是比较稀疏的，在有监督学习中就意味着负样本远大于正样本，类别极其不平衡。我们可能需要采取负采样策略，每次训练的时候随机抽取与正样本等比例的负样本，避免类别不平衡；
-	\item 有些化合物被研究较少，所以在知识图谱中的连接度较低，但这并不说明它是不重要的，每个不被重视的化合物也有可能就是我们要寻找的Covid-19治疗药物，所以我们未来对这一问题也会展开讨论；
-	\item PyG还提供了一些论文中所使用的模型，我们可以使用他人已训练好的模型，来进行链接预测算法。
-\end{itemize}\par
-本部分将在下次论文提交前实现。
+我们已经得到了从自然语言文本中一步步抽取出的“主语-谓词-宾语”三元组信息，每个三元组实际上描述了从“主语”到“宾语”、关系为“谓词”的边，因而这些三元组共同构成了一张知识图谱。下面我们将对知识图谱进行质量控制，并尝试挖掘出潜在的“基因-化合物”信息。\par
+
+\subsubsection{知识图谱质控\label{chap:kgqc}}
+通过句法依存树的最短路径获取的三元组，质量总体并不高，存在大量没有实际意义或意义不正确的关系类型，所以我们需要采取一些知识图谱的质控措施。\par
+首先是知识图谱中存在一些关系极其简单，多数是关系类型为三个字符及以下的三元组需要剔除，例如“CRP ( IL-6”，“IgA of TB”，“pseudoephedrine and ACE2”。这些三元组的出现主要是特殊字符影响句法依存树的构建或NetworkX同名结点合并造成的。\par
+其次，大量三元组的关系类型中未出现动词，即三元组中实际上是没有谓词的，例如“ACE2 cell TMPRSS2”。我们使用ScispaCy库的en\_core\_sci\_sm模型对关系类型进行词性标注，当没有出现动词时，剔除所在三元组。\par
+最后，对于仍然存在的无意义三元组，可以采取人工剔除的方法。前两步过滤得到的三元组质量过关，因此我们没有进行人工剔除。\par
+通过\ref{chap:triple}节的三元组抽取算法，共得到三元组6215条，其中过短的三元组230条，无动词的三元组2476条。质控后得到三元组3509条，占全部三元组的56.46\%。\par
+
+\begin{table*}[htb]
+	\centering
+	\caption{不同超参数对模型效果的影响}
+	\begin{tabular}{cccccccc}
+		\hline
+		负边采样数量 & 隐藏层维度 & 学习率 & $MR$ & $MRR$ & $Hits@1$ & $Hits@3$ & $Hits@10$\\
+		\hline
+		30 & 100 & 0.1 & 0.0575 & 482.8872 & 0.0000 & 0.0658 & 0.1879\\
+		30 & 200 & 0.2 & 0.0671 & 500.0998 & 0.0019 & 0.0821 & 0.2135\\
+		40 & 100 & 0.2 & 0.0609 & 526.0646 & 0.0004 & 0.0749 & 0.1950\\
+		40 & 200 & 0.1 & 0.0630 & 517.4135 & 0.0003 & 0.0697 & 0.2142\\
+		40 & 200 & 0.2 & 0.0714 & 511.7441 & 0.0032 & 0.0941 & 0.2149\\
+		50 & 200 & 0.2 & 0.0662 & 514.1957 & 0.0014 & 0.0808 & 0.2123\\
+		40 & 300 & 0.2 & 0.0699 & 496.6628 & 0.0037 & 0.0873 & 0.2173\\
+		40 & 200 & 0.3 & 0.0717 & 529.3011 & 0.0070 & 0.0955 & 0.2044\\
+		50 & 300 & 0.3 & 0.0746 & 511.1198 & 0.0092 & 0.0947 & 0.2199\\
+		\hline
+	\end{tabular}
+	\label{tab:hyper}
+\end{table*}
+
+\subsubsection{预测目标确定\label{chap:prediction_target}}
+Clinical Trials\footnote{https://clinicaltrials.gov/}网站上记录了大量对新冠患者的医疗干预措施方案，我们从中得知新冠患者的用药情况，并将这些药物作为头实体或尾实体，基因名称或新冠病毒突变类型作为三元组中的另一实体，通过TransE模型预测缺失的边，进而推断这些药物的功能。\par
+辉瑞的Paxlovid，是2021年12月FDA通过紧急使用授权批准的第一个新冠口服药物，也是目前新冠药物中唯一一款蛋白酶抑制剂。Paxlovid是两种抗病毒药物（Nirmatrelvir和Ritonavir）的混合包装，用于治疗成人伴有进展为重症高风险因素的轻至中度新型冠状病毒肺炎患者。Nirmatrelvir能够抑制新冠病毒中的3CL蛋白酶活性，而Ritonavir本来是用于HIV的治疗，但由于其能抑制人体内靶向蛋白酶抑制剂的CYP3A4。因此我们将预测目标确定为Nirmatrelvir和3CLpro之间的关系类型与Ritonavir和CYP3A4之间的关系类型。\par
+
+\subsubsection{TransE模型的实现\label{chap:transe}}
+
+我们首先使用的模型是清华大学和阿里达摩院合作开发的GATNE\cite{GATNE}。该模型实现了多标签异构图的表示学习，即它支持两个结点之间含多种不同关系的知识图谱的表示学习。我们所生成的Covid-19知识图谱便是一种多标签异构图，通过SDP生成的边标签鲜有相同，且两个结点之间可能具有多种不同的关系。可惜的是，该模型以训练集中的边标签在验证集中寻找相同边标签的三元组，来评估训练效果，而我们所用的边标签经过修饰词选用后，已经几乎没有重复，所以无法进行验证。GATNE更适合结构化数据生成的知识图谱的表示学习，而不是NLP三元组抽取得到的知识图谱。\par
+随后，我们使用了由亚马逊开发的知识图谱嵌入训练库DGL-KE\cite{DGL-KE}。DGL-KE是一个高性能、易于使用且可扩展的知识图谱嵌入工具包，支持CPU、GPU和分布式训练，实现了包括TransE、TransR、RESCAL、DistMult、ComplEx和RotatE等一系列经典模型。\par
+DGL-KE库存在2个问题：\par
+\begin{enumerate}
+	\item 在PyTorch 1.11.0版本下，会提示张量索引的类型不正确，需要将张量索引的数据类型修改为long（通过修改源码解决）；
+	\item 使用$\langle h, *, *\rangle$或$\langle *, *, t\rangle$模式进行预测时，只能得到前$K$个自环的三元组，需要对头实体和尾实体是否一致加以判断（尚未解决，所以暂时只能使用一个未知参数进行预测）。
+\end{enumerate}\par
+三元组中不同基因和化合物的出现频次有较大差距，例如Remdesivir出现50次，Ritonavir出现9次，Nirmatrelvir出现5次。实体出现频次的差异可能导致预测结果的偏好性，即预测出的缺失三元组总是出现频次较高的实体。为了解决这一问题，我们原计划降低出现次数较多的实体，例如研究Nirmatrelvir时，对Remdesivir出现的三元组进行抽样，降低出现频次，但我们较少的数据量不足以支持这一想法。因此，我们仍选择全部三元组训练模型，但我们可以指定头实体和尾实体来预测关系类型（预测模式$\langle h, *, t\rangle$），避免实体频次对预测结果的影响。\par
+我们随机选取20\%的三元组作为测试集，再采取五折交叉验证计算模型$MR$、$MRR$、$Hits@1$、$Hits@3$和$Hits@10$五个指标的平均值，以确定模型的较优超参数。表\ref{tab:hyper}列出了我们所测试的不同超参数（负边采样数量、隐藏层维度和学习率）对模型效果的影响。这些超参数在对应的小范围内变化时，对模型效果的影响很小。在总体上看，将隐藏层维度在100-300范围内提高时，预测准确率有一定提升。\par
+
+\subsubsection{关系类型预测}
+下面我们将超参数设置为，负边采样数量30，隐藏层维度300，学习率0.2，批次大小100。我们选取已知关系的基因和化合物（没有直接出现在知识图谱中），查看预测结果是否与已知关系一致，以检查模型的效果。\par
+\begin{enumerate}
+	\item $\langle \textnormal{Nirmatrelvir}, *, \textnormal{3CLpro}\rangle$\par
+	\begin{itemize}
+		\item \textbf{Nirmatrelvir} and highly concentrated mitochondria bind MrgE produce oxide \textbf{3CLpro}
+		\item \textbf{Nirmatrelvir} apigenin classified \textbf{3CLpro}
+		\item \textbf{Nirmatrelvir} exhibits strong mechanism different which activated absorbents \textbf{3CLpro}
+	\end{itemize}\par
+	对于预测模式$\langle \textnormal{Nirmatrelvir}, *, \textnormal{3CLpro}\rangle$，我们期望得到的结果是，Nirmatrelvir能够抑制新冠病毒中的3CLpro，显然并没有得到正确结果。
+	\item $\langle \textnormal{Ritonavir}, *, \textnormal{CYP3A4}\rangle$\par
+	\begin{itemize}
+		\item \textbf{Ritonavir} inhibit impair manner \textbf{CYP3A4}
+		\item \textbf{Ritonavir} infects binding \textbf{CYP3A4}
+		\item \textbf{Ritonavir} higher levels plateau \textbf{CYP3A4}
+	\end{itemize}
+	对于预测模式$\langle \textnormal{Ritonavir}, *, \textnormal{CYP3A4}\rangle$，我们期望得到的结果是，Ritonavir能抑制人体内靶向蛋白酶抑制剂的CYP3A4。预测结果显示Ritonavir能够结合CYP3A4并对CYP3A4的功能有负面影响。事实上，Ritonavir是CYP3A4的底物和抑制剂，在HIV感染引起的慢性病毒性肝炎中显著地损害CYP3A的活性\cite{ritonavir1, ritonavir2}。因此，我们得到了一个可能正确的预测结果。
+\end{enumerate}\par
+我们很高兴能够得到这样的结果。但是由于数据量过小，我们很难保证预测结果的可靠性，也就是说，运气也是得到正确预测结果的一个重要因素。原本认为81290篇文献的标题和摘要，以及994561条PubTator标注已能够满足我们的需求，我们没有想到抽取出能够通过质量检测的基因-化合物三元组仅有3509条，因此命名实体识别和关系识别的优化是该项目中仍需解决的问题。
 
 
 \section{后记}

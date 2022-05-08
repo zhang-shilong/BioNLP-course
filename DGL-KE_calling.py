@@ -13,19 +13,15 @@ class DGLKEModel:
 
     def __init__(self):
         self.triple_dict = dict()
-
-        self.quality_control = None
         self.qc_passed_triples = 0
-        self.too_short_triples = 0
-        self.non_verb_triples = 0
-
         self.nlp = None
-        self.output_prefix = "data/"
 
     def read_triples(self, triple_path, quality_control=True):
-        self.quality_control = quality_control
-        if self.quality_control:
+        if quality_control:
             self.nlp = spacy.load("en_core_sci_sm")
+
+        too_short_triples = 0
+        non_verb_triples = 0
 
         with open(triple_path, "r") as file:
             for line in file.readlines():
@@ -33,23 +29,23 @@ class DGLKEModel:
                 if not line:
                     continue
                 h, r, t = line.split("\t")
-                if self.quality_control:
+                if quality_control:
                     if len(r) < 4:
-                        self.too_short_triples += 1
+                        too_short_triples += 1
                         continue
                     r = r.replace('"', " ").strip()
                     r_nlp = self.nlp(r)
                     if len([token.lemma_ for token in r_nlp if token.pos_ == "VERB"]) == 0:
-                        self.non_verb_triples += 1
+                        non_verb_triples += 1
                         continue
                 self.triple_dict[self.qc_passed_triples] = {"h": h, "r": r, "t": t}
                 self.qc_passed_triples += 1
 
-        if self.quality_control:
-            print("# of too short triples: {}".format(self.too_short_triples))
-            print("# of non-verb triples: {}".format(self.non_verb_triples))
+        if quality_control:
+            print("# of too short triples: {}".format(too_short_triples))
+            print("# of non-verb triples: {}".format(non_verb_triples))
             print("# of qc-passed triples: {}".format(self.qc_passed_triples))
-        print("# of total triples: {}".format(self.too_short_triples + self.non_verb_triples + self.qc_passed_triples))
+        print("# of total triples: {}".format(too_short_triples + non_verb_triples + self.qc_passed_triples))
 
     def k_fold_cross_validation(self, k=5, test_set=0.2):
         command = """
@@ -97,7 +93,8 @@ class DGLKEModel:
         print("---------------------------------------------")
 
     def write_dataset(self, file_name, perm, start_pos1, end_pos1, start_pos2=0, end_pos2=0):
-        with open(self.output_prefix + file_name, "w") as f:
+        output_prefix = "data/"
+        with open(output_prefix + file_name, "w") as f:
             for i in perm[start_pos1:end_pos1] + perm[start_pos2:end_pos2]:
                 tri = self.triple_dict[i]
                 f.write("{}\t{}\t{}\n".format(tri["h"], tri["r"], tri["t"]))
